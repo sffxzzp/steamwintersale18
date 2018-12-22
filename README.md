@@ -12,11 +12,7 @@ Will `NOT` explore queue. use ArchiSteamFarm instead.
 
 Usage
 ======
-Use `Chrome -> DevTools -> Network` to get cookies, and directly save the raw cookies to `.txt` file under configs folder.
-
- * configs
-  - username.txt
- * steamwintersale.py
+Use `Chrome -> DevTools -> Network` to get cookies, and directly save the raw cookies to `.txt` file `UNDER` configs folder.
 
 What it should looks like in `"username.txt"`
 
