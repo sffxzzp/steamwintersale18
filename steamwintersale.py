@@ -135,7 +135,6 @@ class steamwintersale:
 	def openDoor(self):
 		self.log.info("Bot: %s|OpenDoor|Opening Door %s...", self.name, self.door)
 		postdata = "sessionid="+self.sessionid+"&door_index="+str(int(self.door)-1)+"&t="+urllib.parse.quote(str(getUTC()))+"&open_door=true"
-		#print("sessionid=a2eb82ba8e405ac5950280f9&door_index=1&t=2018-12-22T18%3A46%3A42&open_door=true")
 		'''{
 			"sessionid": self.sessionid,
 			"door_index": self.door-1,
@@ -182,4 +181,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-	# handler(['2w84s', 'configs/2w84s.txt'])
