@@ -14,9 +14,9 @@ Usage
 ======
 Use `Chrome -> DevTools -> Network` to get cookies, and directly save the raw cookies to `.txt` file under configs folder.
 
-* configs
- - username.txt
-* steamwintersale.py
+ * configs
+  - username.txt
+ * steamwintersale.py
 
 What it should looks like in `"username.txt"`
 
