@@ -2,6 +2,8 @@ steamwintersale18
 ======
 Python script for personal use.
 
+STILL UNDER DEVELOPMENT. THINK TWICE BEFORE YOU USE IT.
+
 Feature
 ======
 Open cottage door only.
