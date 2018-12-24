@@ -70,7 +70,7 @@ class weblib:
 	def post(self, url, postdata, name=''):
 		try:
 			req = requests.post(url, headers = self.headers, data = postdata, cookies = self.jar, timeout=90)
-			return req.text
+			return req
 		except:
 			self.myprint("%s|Bot: %s|NetworkError|Request: %s" % (getTime(), name, url))
 			return False
@@ -81,7 +81,8 @@ class steamwintersale:
 		self.name = ''
 		self.sessionid = ''
 		self.cookies = []
-		self.door = -1
+		self.nDoor = -1
+		self.tDoor = -1
 		self.weblib = weblib()
 		self.log = logging.getLogger(data[0])
 		self.log.setLevel(logging.DEBUG)
@@ -96,13 +97,19 @@ class steamwintersale:
 	def loadcfg(self, data):
 		self.name, path = data
 		cfile = filelib().open(path)
-		self.cookies = []
 		for cookie in cfile.split(';'):
 			cookie = cookie.strip().split('=', 1)
 			if 'sessionid' in cookie[0]:
 				self.sessionid = cookie[1]
 			self.cookies.append(cookie)
 		self.setCookies(self.cookies)
+	def savecfg(self, data):
+		path = data[1]
+		newcookies = self.weblib.jar.get_dict()
+		outcookies = []
+		for cookie in newcookies:
+			outcookies.append('='.join([cookie, newcookies[cookie]]))
+		filelib().write(path, '; '.join(outcookies))
 	def setCookies(self, cookies):
 		for cookie in cookies:
 			self.weblib.jar.set(cookie[0], cookie[1], domain="store.steampowered.com")
@@ -114,39 +121,42 @@ class steamwintersale:
 			self.log.warning("Bot: %s|CheckDoors|AccountNotLogin", self.name)
 		else:
 			self.log.info("Bot: %s|CheckDoors|Checking...", self.name)
-			now = len(findstr('cottage_door_open', req))
-			self.door = ((getTimestamp()-1545328800)//86400)+1
-			if self.door>now:
-				self.log.info("Bot: %s|CheckDoors|NewDoorFound", self.name)
+			self.nDoor = len(findstr('cottage_door_open', req))
+			self.tDoor = ((getTimestamp()-1545328800)//86400)+1
+			if self.tDoor>self.nDoor:
+				self.log.info("Bot: %s|CheckDoors|NewDoorsFound", self.name)
 				return True
 			else:
 				self.log.info("Bot: %s|CheckDoors|AlreadyOpened", self.name)
 				return False
 	def openDoor(self):
-		self.setCookies(self.cookies)
-		self.log.info("Bot: %s|OpenDoor|Opening Door %s...", self.name, self.door)
-		postdata = {
-			"sessionid": self.sessionid,
-			"door_index": self.door-1,
-			"t": urllib.parse.quote(getUTC()),
-			"open_door": True
-		}
-		req = self.weblib.post(self.url, postdata, self.name)
-		if req=='null':
-			self.log.warning("Bot: %s|OpenDoor|Error", self.name)
-		else:
-			self.log.info("Bot: %s|OpenDoor|Success|Length: %d", self.name, len(req))
+		for i in range(self.nDoor, self.tDoor+1):
+			self.log.info("Bot: %s|OpenDoor|Opening Door %s...", self.name, i-1)
+			postdata = {
+				"sessionid": self.sessionid,
+				"door_index": i-1,
+				"t": urllib.parse.quote(getUTC()),
+				"open_door": True
+			}
+			req = self.weblib.post(self.url, postdata, self.name)
+			self.log.debug("Bot: %s|OpenDoor|Cookies: %s", self.name, self.cookies)
+			req = req.text
+			if req=='null':
+				self.log.warning("Bot: %s|OpenDoor|Error", self.name)
+			else:
+				self.log.info("Bot: %s|OpenDoor|Success|Length: %d", self.name, len(req))
 
 def handler(data):
 	bot = steamwintersale(data)
-	try:
-		bot.loadcfg(data)
-	except:
-		bot.log.error("Bot: %s|LoadConfig|Error", data[0])
 	while True:
-		if bot.check():
-			bot.openDoor()
-		bot.log.info("Bot: %s|ThreadSleep|1 hour", data[0])
+		try:
+			bot.loadcfg(data)
+			if bot.check():
+				bot.openDoor()
+			bot.savecfg(data)
+			bot.log.info("Bot: %s|ThreadSleep|1 hour", data[0])
+		except:
+			bot.log.error("Bot: %s|LoadConfig|Error", data[0])
 		time.sleep(3600)
 
 def main():
