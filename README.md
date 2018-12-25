@@ -1,6 +1,6 @@
 steamwintersale18
 ======
-Bless Python script for https://store.steampowered.com/promotion/cottage_2018/;
+Bless Python script for [https://store.steampowered.com/promotion/cottage_2018/](https://store.steampowered.com/promotion/cottage_2018/)
 
 **Only for personal use.**
 
@@ -26,10 +26,12 @@ Example for `Chrome` browser:
 
 Result
 ------
-Example cofing file: `mybotname.txt`
+Example config file: `mybotname.txt`
 ```text
-browserid=##############; sessionid=##############; timezoneOffset=#####,#; bShouldUseHTML5=#; SL_GWPT_Show_Hide_tmp=#; SL_wptGlobTipTmp=#; steamMachineAuth#############==##############;; BL_D_PROV=; BL_T_PROV=;
+browserid=##########; steamLoginSecure=##########; sessionid=##########; steamMachineAuth##########=##########; steamRememberLogin=##########
 ```
+
+**Please note that `steamRememberLogin` is optional.**
 
 
 Needs?
@@ -39,4 +41,4 @@ Needs?
 * https://www.python.org/downloads/
 * pip install requests
 
-> Don't forget setup you PATH environment...
+> Don't forget to setup your PATH environment...
