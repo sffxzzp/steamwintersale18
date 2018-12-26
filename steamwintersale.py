@@ -70,7 +70,7 @@ class weblib:
 	def post(self, url, postdata, name=''):
 		try:
 			req = requests.post(url, headers = self.headers, data = postdata, cookies = self.jar, timeout=90)
-			return req
+			return req.text
 		except:
 			self.myprint("%s|Bot: %s|NetworkError|Request: %s" % (getTime(), name, url))
 			return False
@@ -139,8 +139,6 @@ class steamwintersale:
 				"open_door": True
 			}
 			req = self.weblib.post(self.url, postdata, self.name)
-			self.log.debug("Bot: %s|OpenDoor|Cookies: %s", self.name, self.cookies)
-			req = req.text
 			if req=='null':
 				self.log.warning("Bot: %s|OpenDoor|Error", self.name)
 			else:

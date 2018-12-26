@@ -4,8 +4,6 @@ Bless Python script for [https://store.steampowered.com/promotion/cottage_2018/]
 
 **Only for personal use.**
 
-STILL UNDER DEVELOPMENT. THINK TWICE BEFORE YOU USE IT.
-
 
 Feature
 ------
@@ -16,12 +14,16 @@ Will `NOT` explore queue. use ArchiSteamFarm instead.
 Usage
 ------
 Example for `Chrome` browser:
-1. Login and open the `Network` page.
-2. Refresh and you'll get a list of requests.
-3. Select `Filter -> Doc`.
-4. Click the `cottage-2018/` usually the first one in the list.
-5. At the right panel select `Headers -> RequestHeaders -> Cookie`.
-6. Copy it and paste in the `mybotname.txt` file you created.
+1. *Login and logout.*
+2. Login *again with `Remember me on this computer` checked* and open the `Network` page.
+3. Refresh and you'll get a list of requests.
+4. Select `Filter -> Doc`.
+5. Click the `cottage-2018/` usually the first one in the list.
+6. At the right panel select `Headers -> RequestHeaders -> Cookie`.
+7. Copy it and paste in the `mybotname.txt` file you created.
+8. *To add a another account, open `Application` page in `DevTools`, and clear cookies instead of logout. (Logout will let your previous work wasted.*
+
+*The italic words above are optional.*
 
 
 Result
@@ -31,7 +33,7 @@ Example config file: `mybotname.txt`
 browserid=##########; steamLoginSecure=##########; sessionid=##########; steamMachineAuth##########=##########; steamRememberLogin=##########
 ```
 
-**Please note that `steamRememberLogin` is optional.**
+**Please note that `steamRememberLogin` part is optional.**
 
 
 Needs?
@@ -41,4 +43,4 @@ Needs?
 * https://www.python.org/downloads/
 * pip install requests
 
-> Don't forget to setup your PATH environment...
+> Don't forget to setup your PATH environment variable...
